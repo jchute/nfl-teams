@@ -136,12 +136,11 @@ class Nfl_Teams_Public {
 
 		$api_url = $api_url . $api_key;
 
-		// $response = wp_remote_get( $api_url );
-		if ( is_array( $response ) or 1===1 ) {
-		// $header = $response['headers']; // array of http header lines
-		// $body = $response['body']; // use the content
-			$body = '{"results":{"columns":{"name":"Name","id":"id","conference":"Conference","division":"Division"},"data":{"team":[{"name":"Arizona","id":"45","conference":"NFC","division":"West"},{"name":"Atlanta","id":"49","conference":"NFC","division":"South"},{"name":"Baltimore","id":"48","conference":"AFC","division":"North"},{"name":"Buffalo","id":"53","conference":"AFC","division":"East"},{"name":"Carolina","id":"59","conference":"NFC","division":"South"},{"name":"Chicago","id":"43","conference":"NFC","division":"North"},{"name":"Cincinnati","id":"41","conference":"AFC","division":"North"},{"name":"Cleveland","id":"60","conference":"AFC","division":"North"},{"name":"Dallas","id":"56","conference":"NFC","division":"East"},{"name":"Denver","id":"61","conference":"AFC","division":"West"},{"name":"Detroit","id":"50","conference":"NFC","division":"North"},{"name":"Green Bay","id":"39","conference":"NFC","division":"North"},{"name":"Houston","id":"42","conference":"AFC","division":"South"},{"name":"Indianapolis","id":"67","conference":"AFC","division":"South"},{"name":"Jacksonville","id":"69","conference":"AFC","division":"South"},{"name":"Kansas City","id":"63","conference":"AFC","division":"West"},{"name":"LA Chargers","id":"47","conference":"AFC","division":"West"},{"name":"LA Rams","id":"64","conference":"NFC","division":"West"},{"name":"Miami","id":"65","conference":"AFC","division":"East"},{"name":"Minnesota","id":"57","conference":"NFC","division":"North"},{"name":"NY Giants","id":"55","conference":"NFC","division":"East"},{"name":"NY Jets","id":"54","conference":"AFC","division":"East"},{"name":"New England","id":"44","conference":"AFC","division":"East"},{"name":"New Orleans","id":"70","conference":"NFC","division":"South"},{"name":"Oakland","id":"66","conference":"AFC","division":"West"},{"name":"Philadelphia","id":"40","conference":"NFC","division":"East"},{"name":"Pittsburgh","id":"46","conference":"AFC","division":"North"},{"name":"San Francisco","id":"58","conference":"NFC","division":"West"},{"name":"Seattle","id":"52","conference":"NFC","division":"West"},{"name":"Tampa Bay","id":"68","conference":"NFC","division":"South"},{"name":"Tennessee","id":"62","conference":"AFC","division":"South"},{"name":"Tennessee","id":"62","conference":"AFCa","division":"Southa"},{"name":"Washington","id":"51","conference":"NFC","division":"East"}]}},"hash":"6e507c30e5cce03e1c914d61f5ea40663b5cc15c"}';
-			$results = json_decode($body, true);
+		$response = wp_remote_get( $api_url );
+
+		if ( is_array( $response ) ) {
+
+			$results = json_decode( $response['body'], true );
 
 			// Simplify the array to contain only teams.
 			$teams = $results['results']['data']['team'];
@@ -167,10 +166,10 @@ class Nfl_Teams_Public {
 				foreach( $divisions as $division) {
 
 					// Search for all teams in the current conference.
-					$teams_conference = $this->search_multidim_array($teams, 'conference', $conference['conference'] );
+					$teams_conference = $this->search_multidim_array( $teams, 'conference', $conference['conference'] );
 
 					// Using the teams from the conference search above, find teams in the current division.
-					$teams_division   = $this->search_multidim_array($teams_conference, 'division', $division['division'] );
+					$teams_division   = $this->search_multidim_array( $teams_conference, 'division', $division['division'] );
 
 					if( ! empty( $teams_division ) ) {
 

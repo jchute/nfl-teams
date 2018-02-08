@@ -13,3 +13,4 @@ A basic WordPress plugin built to show a list of football teams returned from an
 
 * Error checking for API requests
 * Caching for API requests
+* Make results responsive
