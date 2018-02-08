@@ -1,0 +1,30 @@
+{
+    "spaceUnits": 4,
+    "sass.enabled": false,
+    "sass.compiler": "libsass",
+    "path": {
+        "style.scss": {
+            "sass.enabled": true,
+            "sass.options": {
+                "imagePath": null,
+                "sourceComments": false,
+                "outputStyle": "nested"
+            },
+            "linting.collapsed": false,
+            "mikaeljorhult.bracketsPHPLintTools.php-available": true,
+            "linting.SCSS Lint.collapsed": false
+        }
+    },
+    "language": {
+        "css": {
+            "spaceUnits": 4
+        },
+        "javascript": {
+            "spaceUnits": 4
+        },
+        "php": {
+            "useTabChar": true,
+            "tabSize": 4
+        }
+    }
+}
