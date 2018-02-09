@@ -126,9 +126,10 @@ class Nfl_Teams_Public {
 	 */
 	public function nfl_teams_list() {
 
-		$response = '';
-		$api_url  = 'http://delivery.chalk247.com/team_list/NFL.JSON?api_key=';
-		$api_key  = get_option( $this->plugin_name . '-api-key' );
+		$response      = '';
+		$api_url       = 'http://delivery.chalk247.com/team_list/NFL.JSON?api_key=';
+		$api_key 	   = get_option( $this->plugin_name . '-api-key' );
+		$transient_key = $this->plugin_name . '-transient-key';
 
 		if ( ! $api_key && is_user_logged_in() ) {
 			echo 'API Key not set. <a href="' . get_admin_url() . 'admin.php?page=nfl-teams-settings">Set the API Key</a>.';
@@ -136,9 +137,16 @@ class Nfl_Teams_Public {
 
 		$api_url = $api_url . $api_key;
 
-		$response = wp_remote_get( $api_url );
+		// Check if transient exists.
+		if ( false === ( $response = get_transient( $transient_key ) ) ) {
+
+			$response = wp_remote_get( $api_url );
+
+		}
 
 		if ( is_array( $response ) ) {
+
+			set_transient( $transient_key, $response, HOUR_IN_SECONDS );
 
 			$results = json_decode( $response['body'], true );
 
