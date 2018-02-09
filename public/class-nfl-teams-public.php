@@ -129,13 +129,13 @@ class Nfl_Teams_Public {
 		$response      = '';
 		$api_url       = 'http://delivery.chalk247.com/team_list/NFL.JSON?api_key=';
 		$api_key 	   = get_option( $this->plugin_name . '-api-key' );
+		$api_url       = $api_url . $api_key;
 		$transient_key = $this->plugin_name . '-transient-key';
 
 		if ( ! $api_key && is_user_logged_in() ) {
 			echo 'API Key not set. <a href="' . get_admin_url() . 'admin.php?page=nfl-teams-settings">Set the API Key</a>.';
+			return false;
 		}
-
-		$api_url = $api_url . $api_key;
 
 		// Check if transient exists.
 		if ( false === ( $response = get_transient( $transient_key ) ) ) {
@@ -144,7 +144,7 @@ class Nfl_Teams_Public {
 
 		}
 
-		if ( is_array( $response ) ) {
+		if ( is_array( $response ) && 200 === $response['response']['code'] ) {
 
 			set_transient( $transient_key, $response, HOUR_IN_SECONDS );
 
