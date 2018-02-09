@@ -195,7 +195,7 @@ class Nfl_Teams_Public {
 	 * Return unique elements of multidimensional array
 	 * http://php.net/manual/en/function.array-unique.php#116302
 	 */
-	public function unique_multidim_array($array, $key) {
+	private function unique_multidim_array($array, $key) {
 		$temp_array = array();
 		$count      = 0;
 		$key_array  = array();
@@ -213,7 +213,7 @@ class Nfl_Teams_Public {
 	/**
 	 * multidimensional array search
 	 */
-	public function search_multidim_array($array, $key, $needle) {
+	private function search_multidim_array($array, $key, $needle) {
 
 		$result = array();
 
